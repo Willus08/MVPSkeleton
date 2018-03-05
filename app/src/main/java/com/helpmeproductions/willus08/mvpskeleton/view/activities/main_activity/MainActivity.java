@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupDagger();
-        presenter.addView(this);
+        presenter.getInfo();
+
     }
 
     @Override
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void setupDagger() {
         DaggerMainComponent.create().inject(this);
+        presenter.addView(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.removeView();
     }
 
     @Override
